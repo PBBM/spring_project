@@ -1,0 +1,64 @@
+package com.projetAl.microservice_user.http.controleur;
+
+import java.net.URI;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.projetAl.microservice_user.dao.UserRepository;
+import com.projetAl.microservice_user.modele.User;
+
+@RestController
+@RequestMapping(path="/map")
+public class UserControleur {
+	@Autowired
+	private UserRepository userRepository;
+
+	@PostMapping(path="/addUser")
+	public ResponseEntity<Void> createUser(@RequestBody User user) {
+		User userAdded = userRepository.save(user);
+		
+		if (userAdded == null)
+			return ResponseEntity.noContent().build();
+		
+			URI uri = ServletUriComponentsBuilder
+					.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(userAdded.getId())
+					.toUri();
+			
+			return ResponseEntity.created(uri).build();
+	}
+	
+	@GetMapping(path="/listUsers")
+	public @ResponseBody Iterable<User> getAllUsers() {
+		return userRepository.findAll();
+	}
+	
+	@GetMapping(path="/user/{id}")
+	public @ResponseBody Optional<User> getUser(@PathVariable Integer id) {
+		return userRepository.findById(id);	
+	}
+	
+	@DeleteMapping(path="/deleteUser/{id}")
+	public void deleteUser(@PathVariable Integer id) {
+		userRepository.deleteById(id);
+	}
+
+	@PutMapping(path="/updateUser") // Nécessite d'utiliser le même 'Id'
+	public void updateUser(@RequestBody User user) {
+		userRepository.save(user);
+	}
+	
+}

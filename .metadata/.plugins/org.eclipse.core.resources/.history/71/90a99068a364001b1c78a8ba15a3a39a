@@ -1,0 +1,5 @@
+package com.projetAl.microservice_user.modele;
+
+public class User {
+
+}
