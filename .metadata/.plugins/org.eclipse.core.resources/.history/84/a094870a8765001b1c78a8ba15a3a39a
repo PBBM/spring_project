@@ -43,7 +43,7 @@ public class UserControleur {
 			return ResponseEntity.created(uri).build();
 	}
 	
-	@GetMapping(path="/users")
+	@GetMapping(path="/listUsers")
 	public @ResponseBody Iterable<User> getAllUsers() {
 		return userRepository.findAll();
 	}

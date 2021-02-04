@@ -23,10 +23,10 @@ public class User {
 	
 	private String[] preferences;	
 	
-	public User(Integer id, String connexionId, String password, String lastName, String firstName, String email,
+	public User(Integer id, String connectionId, String password, String lastName, String firstName, String email,
 			String[] preferences) {
 		this.id = id;
-		this.connexionId = connexionId;
+		this.connexionId = connectionId;
 		this.password = password;
 		this.lastName = lastName;
 		this.firstName = firstName;
@@ -46,12 +46,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getConnexionId() {
+	public String getConnectionId() {
 		return connexionId;
 	}
 
-	public void setConnexionId(String connexionId) {
-		this.connexionId = connexionId;
+	public void setConnectionId(String connectionId) {
+		this.connexionId = connectionId;
 	}
 
 	public String getPassword() {
